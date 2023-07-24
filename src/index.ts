@@ -1,27 +1,22 @@
-import type { OptionsProps, optionTypes } from "./init";
+import type { OptionsProps } from "./init";
 import { typeEmoji, whichColor, typeColor } from "./init";
 
-const harexsLog = (title: string, info?: string, opts?: OptionsProps) => {
-  // argument warn
-  if (!title) {
-    title = "Harexs_Log";
-    console.warn("arguments title is must be set");
+const harexsLog = (opts?: OptionsProps) => {
+  let title = "Harexs-Log：";
+  // normal title
+  if (opts?.title) {
+    title = opts.title;
   }
-
   // Is window or node
   let node = true;
   if (typeof window !== "undefined") {
     node = false;
   }
-  // inital and normal Set
   let emoji = "🌈";
   let titleCSS = typeColor["primary"];
-  let infoCSS = "";
-  let infoText = "";
-  let titleText = `%c${title}`;
   let nodeType = "primary";
 
-  let result = [];
+  let result: any = [];
 
   if (opts?.type) {
     emoji = typeEmoji[opts.type];
@@ -32,32 +27,36 @@ const harexsLog = (title: string, info?: string, opts?: OptionsProps) => {
     emoji = opts.icon;
   }
 
-  // insert emoji
-  titleText = node
-    ? titleText.replace("%c", `${emoji} `)
-    : titleText.replace("%c", `%c${emoji} `);
+  return (...messages: any[]) => {
+    messages.forEach((msg) => {
+      if (node) {
+        result.push(msg);
+      } else {
+        result.push(msg);
+      }
+    });
 
-  result = [`${titleText}`, titleCSS];
-  if (info) {
-    infoCSS = typeColor["info"];
-    infoText = node ? `${info}` : `%c${info}`;
-    result = [`${titleText}${infoText}`, titleCSS, infoCSS];
-  }
-
-  if (node) {
-    result = info
-      ? [
-          `\x1b[${
-            whichColor[nodeType as keyof typeof whichColor]
-          }m${titleText}\x1b[${whichColor["info"]}m[${infoText}]`,
-        ]
-      : [
-          `\x1b[${
-            whichColor[nodeType as keyof typeof whichColor]
-          }m${titleText}\x1b[0m`,
-        ];
-  }
-  console.log(...result);
+    if (node) {
+      result.unshift(
+        `\x1b[${
+          whichColor[nodeType as keyof typeof whichColor]
+        }m${emoji} ${title}\x1b[0m`
+      );
+      if (opts?.nodeLogType) {
+        console[opts.nodeLogType](...result);
+      } else {
+        console.log(...result);
+      }
+    } else {
+      result.unshift(titleCSS);
+      result.unshift(`%c${emoji} ${title}`);
+      if (opts?.windowLogType) {
+        console[opts.windowLogType](...result);
+      } else {
+        console.trace(...result);
+      }
+    }
+  };
 };
 
 export default harexsLog;

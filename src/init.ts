@@ -6,9 +6,14 @@ export type optionTypes =
   | "error"
   | "info";
 
+export type logTypes = "log" | "trace" | "warn";
+
 export interface OptionsProps {
   type?: optionTypes;
   icon?: string;
+  title?: string;
+  windowLogType?: logTypes;
+  nodeLogType?: logTypes;
 }
 
 export const whichColor = {
