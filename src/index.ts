@@ -15,7 +15,7 @@ const harexsLog = (opts?: OptionsProps) => {
   let emoji = "🌈";
   let titleCSS = typeColor["primary"];
   let nodeType = "primary";
-
+  // results msg
   let result: any = [];
 
   if (opts?.type) {
@@ -26,7 +26,6 @@ const harexsLog = (opts?: OptionsProps) => {
   if (opts?.icon) {
     emoji = opts.icon;
   }
-
   return (...messages: any[]) => {
     messages.forEach((msg) => {
       if (node) {
@@ -48,7 +47,7 @@ const harexsLog = (opts?: OptionsProps) => {
         console.log(...result);
       }
     } else {
-      result.unshift(titleCSS);
+      result.unshift(titleCSS); // window console style
       result.unshift(`%c${emoji} ${title}`);
       if (opts?.windowLogType) {
         console[opts.windowLogType](...result);
