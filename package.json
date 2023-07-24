@@ -1,0 +1,35 @@
+{
+  "name": "@harexs/style-log",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "a simple console style log for devtools or nodejs",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "default": "./dist/index.js",
+    "import": "./dist/index.js",
+    "require": "./dist/index.cjs"
+  },
+  "source": "src/index.ts",
+  "author": {
+    "name": "Harexs",
+    "email": "con1y@qq.com"
+  },
+  "license": "MIT",
+  "files": [
+    "./dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --watch --dts",
+    "login": "npm login --registry https://registry.npmjs.org/",
+    "pub": "npm publish --access public --registry https://registry.npmjs.org/",
+    "commit": "git-cz",
+    "release": "release-it"
+  },
+  "devDependencies": {
+    "git-cz": "^4.9.0",
+    "release-it": "^16.1.3",
+    "tsup": "^7.1.0",
+    "typescript": "^5.1.6"
+  }
+}
